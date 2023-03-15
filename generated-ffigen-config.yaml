@@ -6,7 +6,7 @@ description: cpp APIs
 
 headers:
   entry-points:
-    - ../cpp/api/ffi_api.h
+    - ./cpp/ffi_api.h
 
 comments:
   style: any
