@@ -4,7 +4,7 @@ The program only use to verify that carshes which is made by ffi can not be capt
 
 There are two ways to verify. Same program call ffi interface and c++ plugin. Crash in Ffi module( c++ code be called) can not be captured. Crash in c++ plugins can be captured.
 
-In addation, crash in main function can be captured.
+In addition, crash in main function can be captured.
 
 ## Getting Started
 
