@@ -1,7 +1,8 @@
-﻿#include "scene.h"
+﻿#include "crash.h"
 #include <iostream>
+#include<stdexcept>
 
-void Scene::TriggerCrash(int crashType)
+void Crash::Trigger(int crashType)
 {
     switch (crashType)
     {
@@ -25,7 +26,7 @@ void Scene::TriggerCrash(int crashType)
     case 2:
     {
         std::cout << "throw exception" << std::endl;
-        throw 1;
+        throw std::invalid_argument("throw exception");
     }
     break;
     

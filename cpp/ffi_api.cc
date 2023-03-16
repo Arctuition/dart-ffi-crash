@@ -1,8 +1,8 @@
 #include "ffi_api.h"
-#include "scene.h"
+#include "crash.h"
 #include <iostream>
 
 API void StartCPP() {
     std::cout << "hello, cpp!"<< std::endl;
-    Scene::GetScene()->TriggerCrash(1);
+    Crash::Trigger(1);
 }
