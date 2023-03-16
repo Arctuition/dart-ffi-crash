@@ -32,7 +32,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
 
   project.set_dart_entrypoint_arguments(std::move(command_line_arguments));
 
-    std::cout<< "test crash"<< std::endl;
+    // you can make a crash here. this crash can be captured by sentry.
     /*double* dptr = nullptr;
     *dptr = 3;*/
 
