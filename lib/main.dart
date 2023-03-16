@@ -1,5 +1,6 @@
 import 'package:dart_ffi_crash/app_ffi.dart';
 import 'package:flutter/material.dart';
+import 'package:test_crash/test_crash.dart';
 
 void main() {
   runApp(const App());
@@ -11,7 +12,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'FFI Crash Demo',
+      title: 'Windows Crash Demo',
       home: Home(title: 'Demo Page'),
     );
   }
@@ -27,8 +28,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  makeCrash() {
+  ffiCrash() {
     getAppApi().StartCPP();
+  }
+
+  pluginCrash(int type) {
+    TestCrash.makeCrash(type);
   }
 
   @override
@@ -37,10 +42,71 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: TextButton(
-          onPressed: makeCrash,
-          child: const Text('crash'),
+      body: DefaultTextStyle(
+        style: const TextStyle(fontSize: 30, color: Colors.black),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 40),
+              child: Text(
+                'these buttons will call the ffi crash api, which can\'t be caught by crashpad',
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: ffiCrash,
+                  child: const Text('type1'),
+                ),
+                TextButton(
+                  onPressed: ffiCrash,
+                  child: const Text('type2'),
+                ),
+                TextButton(
+                  onPressed: ffiCrash,
+                  child: const Text('type3'),
+                ),
+                TextButton(
+                  onPressed: ffiCrash,
+                  child: const Text('type4'),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 40),
+              child: Text(
+                'these buttons will call the plugin crash api, which can be caught by crashpad',
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () => pluginCrash(1),
+                  child: const Text('type1'),
+                ),
+                TextButton(
+                  onPressed: () => pluginCrash(2),
+                  child: const Text('type2'),
+                ),
+                TextButton(
+                  onPressed: () => pluginCrash(3),
+                  child: const Text('type3'),
+                ),
+                TextButton(
+                  onPressed: () => pluginCrash(4),
+                  child: const Text('type4'),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 80),
+              child: Text(
+                'the ffi crash api and plugin crash api call the same cpp method',
+              ),
+            ),
+          ],
         ),
       ),
     );
