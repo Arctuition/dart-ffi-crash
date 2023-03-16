@@ -16,6 +16,10 @@ add_executable(${BINARY_NAME} WIN32
   "runner.exe.manifest"
 )
 
+
+set(sentryNative_root "${CMAKE_SOURCE_DIR}/dependencies/SentryNative")
+
+
 # Apply the standard set of build settings. This can be removed for applications
 # that need different build settings.
 apply_standard_settings(${BINARY_NAME})
@@ -34,7 +38,18 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "NOMINMAX")
 # dependencies here.
 target_link_libraries(${BINARY_NAME} PRIVATE flutter flutter_wrapper_app)
 target_link_libraries(${BINARY_NAME} PRIVATE "dwmapi.lib")
-target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}")
+target_link_libraries(${BINARY_NAME} PRIVATE
+    debug "${sentryNative_root}/debug/sentry.lib" 
+    optimized "${sentryNative_root}/release/sentry.lib"
+)
+target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}" "${sentryNative_root}/debug/include")
+
+install(FILES ${sentryNative_root}/debug/sentry.pdb CONFIGURATIONS Debug DESTINATION "$<TARGET_FILE_DIR:${BINARY_NAME}>" COMPONENT Runtime)
+install(FILES ${sentryNative_root}/debug/sentry.dll CONFIGURATIONS Debug DESTINATION "$<TARGET_FILE_DIR:${BINARY_NAME}>" COMPONENT Runtime)
+install(FILES ${sentryNative_root}/debug/crashpad_handler.exe CONFIGURATIONS Debug DESTINATION "$<TARGET_FILE_DIR:${BINARY_NAME}>" COMPONENT Runtime)
+
+install(FILES ${sentryNative_root}/release/sentry.dll CONFIGURATIONS Release DESTINATION "$<TARGET_FILE_DIR:${BINARY_NAME}>" COMPONENT Runtime)
+install(FILES ${sentryNative_root}/release/crashpad_handler.exe CONFIGURATIONS Release DESTINATION "$<TARGET_FILE_DIR:${BINARY_NAME}>" COMPONENT Runtime)
 
 # Run the Flutter tool portions of the build. This must not be removed.
 add_dependencies(${BINARY_NAME} flutter_assemble)
