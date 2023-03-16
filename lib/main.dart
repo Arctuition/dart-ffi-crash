@@ -59,19 +59,15 @@ class _HomeState extends State<Home> {
               children: [
                 TextButton(
                   onPressed: () => ffiCrash(0),
-                  child: const Text('type0'),
+                  child: const Text('divide by 0'),
                 ),
                 TextButton(
                   onPressed: () => ffiCrash(1),
-                  child: const Text('type1'),
+                  child: const Text('memory error'),
                 ),
                 TextButton(
                   onPressed: () => ffiCrash(2),
-                  child: const Text('type2'),
-                ),
-                TextButton(
-                  onPressed: () => ffiCrash(3),
-                  child: const Text('type3'),
+                  child: const Text('throw exception'),
                 ),
               ],
             ),
@@ -86,19 +82,15 @@ class _HomeState extends State<Home> {
               children: [
                 TextButton(
                   onPressed: () => pluginCrash(0),
-                  child: const Text('type0'),
+                  child: const Text('divide by 0'),
                 ),
                 TextButton(
                   onPressed: () => pluginCrash(1),
-                  child: const Text('type1'),
+                  child: const Text('memory error'),
                 ),
                 TextButton(
                   onPressed: () => pluginCrash(2),
-                  child: const Text('type2'),
-                ),
-                TextButton(
-                  onPressed: () => pluginCrash(3),
-                  child: const Text('type3'),
+                  child: const Text('throw exception'),
                 ),
               ],
             ),
