@@ -4,25 +4,29 @@
 import 'dart:ffi' as ffi;
 
 /// cpp APIs
-class AppApi {
+class FFIApi {
   /// Holds the symbol lookup function.
   final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
       _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  AppApi(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
+  FFIApi(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
 
   /// The symbols are looked up with [lookup].
-  AppApi.fromLookup(
+  FFIApi.fromLookup(
       ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
           lookup)
       : _lookup = lookup;
 
-  void StartCPP() {
-    return _StartCPP();
+  void makeCrash(
+    int type,
+  ) {
+    return _makeCrash(
+      type,
+    );
   }
 
-  late final _StartCPPPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('StartCPP');
-  late final _StartCPP = _StartCPPPtr.asFunction<void Function()>();
+  late final _makeCrashPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int)>>('makeCrash');
+  late final _makeCrash = _makeCrashPtr.asFunction<void Function(int)>();
 }

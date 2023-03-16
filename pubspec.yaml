@@ -11,8 +11,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: 1.0.2
   ffi: 2.0.1
-  test_crash:
-    path: ./plugins/test_crash
+  make_crash:
+    path: ./plugins/make_crash
 
 dev_dependencies:
   flutter_test:

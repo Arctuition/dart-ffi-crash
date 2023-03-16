@@ -1,7 +1,7 @@
 # Dart ffigen config YAML
 ---
 output: ./lib/generated_bindings.dart
-name: AppApi
+name: FFIApi
 description: cpp APIs
 
 headers:

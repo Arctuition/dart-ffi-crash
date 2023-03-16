@@ -1,10 +1,11 @@
 import 'dart:ffi';
 import 'dart:io';
-import '../generated_bindings.dart';
 
-AppApi? _api;
+import 'generated_bindings.dart';
 
-AppApi getAppApi() {
+FFIApi? _api;
+
+FFIApi getFFIApi() {
   if (_api == null) {
     late DynamicLibrary lib;
     if (Platform.isWindows) {
@@ -14,7 +15,7 @@ AppApi getAppApi() {
     } else {
       lib = DynamicLibrary.open('app.so');
     }
-    _api = AppApi(lib);
+    _api = FFIApi(lib);
   }
   return _api!;
 }

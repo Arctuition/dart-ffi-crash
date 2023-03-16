@@ -3,6 +3,6 @@
 
 #include "macros.h"
 
-API void StartCPP();
+API void makeCrash(int type);
 
 #endif /* _FFI_API_H_ */

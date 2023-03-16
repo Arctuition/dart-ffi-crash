@@ -1,8 +1,10 @@
 import 'package:dart_ffi_crash/app_ffi.dart';
 import 'package:flutter/material.dart';
-import 'package:test_crash/test_crash.dart';
+import 'package:make_crash/make_crash.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const App());
 }
 
@@ -28,12 +30,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  ffiCrash() {
-    getAppApi().StartCPP();
+  ffiCrash(int type) {
+    getFFIApi().makeCrash(type);
   }
 
   pluginCrash(int type) {
-    TestCrash.makeCrash(type);
+    MakeCrashPlugin.makeCrash(type);
   }
 
   @override
@@ -49,39 +51,43 @@ class _HomeState extends State<Home> {
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 40),
               child: Text(
-                'these buttons will call the ffi crash api, which can\'t be caught by crashpad',
+                'these ffi call crash can\'t be caught by crashpad',
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: ffiCrash,
+                  onPressed: () => ffiCrash(0),
+                  child: const Text('type0'),
+                ),
+                TextButton(
+                  onPressed: () => ffiCrash(1),
                   child: const Text('type1'),
                 ),
                 TextButton(
-                  onPressed: ffiCrash,
+                  onPressed: () => ffiCrash(2),
                   child: const Text('type2'),
                 ),
                 TextButton(
-                  onPressed: ffiCrash,
+                  onPressed: () => ffiCrash(3),
                   child: const Text('type3'),
-                ),
-                TextButton(
-                  onPressed: ffiCrash,
-                  child: const Text('type4'),
                 ),
               ],
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 40),
               child: Text(
-                'these buttons will call the plugin crash api, which can be caught by crashpad',
+                'these plugin call crash can be caught by crashpad',
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                TextButton(
+                  onPressed: () => pluginCrash(0),
+                  child: const Text('type0'),
+                ),
                 TextButton(
                   onPressed: () => pluginCrash(1),
                   child: const Text('type1'),
@@ -94,16 +100,12 @@ class _HomeState extends State<Home> {
                   onPressed: () => pluginCrash(3),
                   child: const Text('type3'),
                 ),
-                TextButton(
-                  onPressed: () => pluginCrash(4),
-                  child: const Text('type4'),
-                ),
               ],
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 80),
               child: Text(
-                'the ffi crash api and plugin crash api call the same cpp method',
+                'they call the same cpp method',
               ),
             ),
           ],

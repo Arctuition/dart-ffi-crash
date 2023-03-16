@@ -1,24 +1,24 @@
-#ifndef FLUTTER_PLUGIN_TEST_CRASH_PLUGIN_H_
-#define FLUTTER_PLUGIN_TEST_CRASH_PLUGIN_H_
+#ifndef FLUTTER_PLUGIN_MAKE_CRASH_PLUGIN_H_
+#define FLUTTER_PLUGIN_MAKE_CRASH_PLUGIN_H_
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar_windows.h>
 
 #include <memory>
 
-namespace test_crash {
+namespace make_crash {
 
-class TestCrashPlugin : public flutter::Plugin {
+class MakeCrashPlugin : public flutter::Plugin {
  public:
   static void RegisterWithRegistrar(flutter::PluginRegistrarWindows *registrar);
 
-  TestCrashPlugin();
+  MakeCrashPlugin();
 
-  virtual ~TestCrashPlugin();
+  virtual ~MakeCrashPlugin();
 
   // Disallow copy and assign.
-  TestCrashPlugin(const TestCrashPlugin&) = delete;
-  TestCrashPlugin& operator=(const TestCrashPlugin&) = delete;
+  MakeCrashPlugin(const MakeCrashPlugin&) = delete;
+  MakeCrashPlugin& operator=(const MakeCrashPlugin&) = delete;
 
  private:
   // Called when a method is called on this plugin's channel from Dart.
@@ -27,6 +27,6 @@ class TestCrashPlugin : public flutter::Plugin {
       std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
 };
 
-}  // namespace test_crash
+}  // namespace make_crash
 
-#endif  // FLUTTER_PLUGIN_TEST_CRASH_PLUGIN_H_
+#endif  // FLUTTER_PLUGIN_MAKE_CRASH_PLUGIN_H_

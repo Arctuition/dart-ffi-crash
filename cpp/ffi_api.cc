@@ -2,7 +2,7 @@
 #include "crash.h"
 #include <iostream>
 
-API void StartCPP() {
+API void makeCrash(int type) {
     std::cout << "hello, cpp!"<< std::endl;
-    Crash::Trigger(1);
+    Crash::Trigger(type);
 }

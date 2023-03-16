@@ -1,4 +1,4 @@
-#include "test_crash_plugin.h"
+#include "make_crash_plugin.h"
 
 // This must be included before many other Windows headers.
 #include <windows.h>
@@ -14,17 +14,17 @@
 #include <memory>
 #include <sstream>
 
-namespace test_crash {
+namespace make_crash {
 
 // static
-void TestCrashPlugin::RegisterWithRegistrar(
+void MakeCrashPlugin::RegisterWithRegistrar(
     flutter::PluginRegistrarWindows *registrar) {
   auto channel =
       std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
-          registrar->messenger(), "test_crash",
+          registrar->messenger(), "make_crash",
           &flutter::StandardMethodCodec::GetInstance());
 
-  auto plugin = std::make_unique<TestCrashPlugin>();
+  auto plugin = std::make_unique<MakeCrashPlugin>();
 
   channel->SetMethodCallHandler(
       [plugin_pointer = plugin.get()](const auto &call, auto result) {
@@ -34,19 +34,21 @@ void TestCrashPlugin::RegisterWithRegistrar(
   registrar->AddPlugin(std::move(plugin));
 }
 
-TestCrashPlugin::TestCrashPlugin() {}
+MakeCrashPlugin::MakeCrashPlugin() {}
 
-TestCrashPlugin::~TestCrashPlugin() {}
+MakeCrashPlugin::~MakeCrashPlugin() {}
 
-void TestCrashPlugin::HandleMethodCall(
+void MakeCrashPlugin::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
   if (method_call.method_name().compare("makeCrash") == 0) {
-    std::cout << "hello, test crash plugin!"<< std::endl;
-    result->Success();
+    const auto type = std::get_if<int>(method_call.arguments());
+    int crashType = *type;
+    std::cout << "test crash plugin, type: " << crashType << std::endl;
+    result->Success(flutter::EncodableValue(true));
   } else {
     result->NotImplemented();
   }
 }
 
-}  // namespace test_crash
+}  // namespace make_crash
