@@ -14,6 +14,8 @@
 #include <memory>
 #include <sstream>
 
+#include "../../../app/crash.h"
+
 namespace make_crash {
 
 // static
@@ -44,8 +46,8 @@ void MakeCrashPlugin::HandleMethodCall(
   if (method_call.method_name().compare("makeCrash") == 0) {
     const auto type = std::get_if<int>(method_call.arguments());
     int crashType = *type;
-    std::cout << "test crash plugin, type: " << crashType << std::endl;
-    result->Success(flutter::EncodableValue(true));
+    Crash::Trigger(crashType);
+    //result->Success(flutter::EncodableValue(true));
   } else {
     result->NotImplemented();
   }

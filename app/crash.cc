@@ -1,4 +1,5 @@
-﻿#include "crash.h"
+﻿#define CRASH_API
+#include "crash.h"
 #include <iostream>
 #include<stdexcept>
 
